@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:chat_gpt/constants/constants.dart';
+import 'package:chat_gpt/services/api_service.dart';
 import 'package:chat_gpt/services/assets_manager.dart';
+import 'package:chat_gpt/services/services.dart';
+import 'package:chat_gpt/widgets/chat_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -32,7 +37,9 @@ class _ChatScreenState extends State<ChatScreen> {
         title: const Text("ChatGPT"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              await Services.showModalSheet(context: context);
+            },
             icon: const Icon(
               Icons.more_vert_rounded,
               color: Colors.white,
@@ -47,7 +54,11 @@ class _ChatScreenState extends State<ChatScreen> {
               child: ListView.builder(
                   itemCount: 6,
                   itemBuilder: (context, index) {
-                    return const Text("Hello this is a text");
+                    return ChatWidget(
+                      msg: chatMessages[index]['msg'].toString(),
+                      chatIndex: int.parse(
+                          chatMessages[index]['chatIndex'].toString()),
+                    );
                   }),
             ),
             if (_isTyping) ...[
@@ -56,7 +67,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 size: 18,
               ),
               const SizedBox(
-                height: 14,
+                height: 8,
               ),
               Material(
                 color: cardColor,
@@ -80,7 +91,13 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            await ApiServices.getModels();
+                          } catch (err) {
+                            log(err.toString());
+                          }
+                        },
                         icon: const Icon(
                           Icons.send,
                           color: Colors.white,
