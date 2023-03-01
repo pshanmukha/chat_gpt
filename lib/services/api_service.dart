@@ -16,19 +16,15 @@ class ApiServices {
       );
       Map jsonResponse = jsonDecode(response.body);
       if (jsonResponse['error'] != null) {
-        // print("jsonResponse['error'] ${jsonResponse['error']["message"]}");
         throw HttpException(jsonResponse['error']["message"]);
       }
-      //print("jsonResponse $jsonResponse");
       List temp = [];
       for (var value in jsonResponse['data']) {
         temp.add(value);
-        //log("temp ${value["id"]}");
       }
 
       return ModelsModel.modelsFromSnapshot(temp);
     } catch (err) {
-      log(err.toString());
       rethrow;
     }
   }
@@ -50,13 +46,11 @@ class ApiServices {
       );
       Map jsonResponse = jsonDecode(response.body);
       if (jsonResponse['error'] != null) {
-        // print("jsonResponse['error'] ${jsonResponse['error']["message"]}");
         throw HttpException(jsonResponse['error']["message"]);
       }
       List<ChatModel> chatList = [];
       if (jsonResponse["choices"].length > 0) {
-        //log("jsonResponse[choices] ${jsonResponse["choices"][0]["text"]}");
-        chatList = List.generate(
+       chatList = List.generate(
           jsonResponse["choices"].length,
           (index) => ChatModel(
               msg: jsonResponse["choices"][index]["text"], chatIndex: 1),
@@ -64,7 +58,6 @@ class ApiServices {
       }
       return chatList;
     } catch (err) {
-      log(err.toString());
       rethrow;
     }
   }

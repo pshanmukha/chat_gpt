@@ -96,13 +96,13 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 trailing: _isTyping
                     ? const SizedBox(
-                      height: 24.0,
-                      width: 28.0,
-                      child: SpinKitThreeBounce(
+                        height: 24.0,
+                        width: 28.0,
+                        child: SpinKitThreeBounce(
                           color: Colors.white,
                           size: 18,
                         ),
-                    )
+                      )
                     : IconButton(
                         onPressed: () async {
                           await sendMessageFCT(
@@ -136,16 +136,18 @@ class _ChatScreenState extends State<ChatScreen> {
       );
       return;
     }
-    setState(() {
-      _isTyping = true;
-      chatProvider.addUserMessage(
-        msg: _textEditingController.text,
-      );
-      _textEditingController.clear();
-      _focusNode.unfocus();
-    });
+
     try {
       final msg = _textEditingController.text;
+      setState(() {
+        _isTyping = true;
+        chatProvider.addUserMessage(
+          msg: msg,
+        );
+        _textEditingController.clear();
+        _focusNode.unfocus();
+      });
+
       await chatProvider.sendMessageAndGetAnswers(
         msg: msg,
         chosenModelId: modelsProvider.getCurrentModel,
@@ -153,7 +155,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
       setState(() {});
     } catch (err) {
-      log(err.toString());
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: TextWidget(
