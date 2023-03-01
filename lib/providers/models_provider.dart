@@ -6,11 +6,11 @@ class ModelsProvider with ChangeNotifier {
   List<ModelsModel> _modelsLIst = [];
   List<ModelsModel> get getModelsList => _modelsLIst;
 
-  String currentModel = "text-davinci-003";
-  String get getCurrentModel => currentModel;
+  String _currentModel = "text-davinci-003";
+  String get getCurrentModel => _currentModel;
 
   void setCurrentModel(String newModel) {
-    currentModel = newModel;
+    _currentModel = newModel;
     ChangeNotifier();
   }
 

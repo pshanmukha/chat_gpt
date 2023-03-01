@@ -2,6 +2,7 @@ import 'package:chat_gpt/constants/constants.dart';
 import 'package:chat_gpt/services/assets_manager.dart';
 import 'package:chat_gpt/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class ChatWidget extends StatelessWidget {
   const ChatWidget({Key? key, required this.msg, required this.chatIndex})
@@ -31,13 +32,40 @@ class ChatWidget extends StatelessWidget {
                   height: 8,
                 ),
                 Expanded(
-                  child: TextWidget(
-                    label: msg,
-                  ),
+                  child: chatIndex == 0
+                      ? Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: TextWidget(
+                            label: msg,
+                          ),
+                      )
+                      : Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: DefaultTextStyle(
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                          ),
+                          child: AnimatedTextKit(
+                              animatedTexts: [
+                                TypewriterAnimatedText(
+                                  msg.trim(),
+                                ),
+                              ],
+                              totalRepeatCount: 1,
+                              displayFullTextOnTap: true,
+                              isRepeatingAnimation: false,
+                              repeatForever: false,
+                            ),
+                        ),
+                      ),
                 ),
                 chatIndex == 0
                     ? const SizedBox.shrink()
                     : Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisSize: MainAxisSize.min,
                         children: const [
                           Icon(
                             Icons.thumb_up_alt_outlined,

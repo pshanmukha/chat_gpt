@@ -19,16 +19,11 @@ class Services {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
-                Flexible(
-                  child: TextWidget(
-                    label: "Choose Model:",
-                    fontSize: 16,
-                  ),
+                TextWidget(
+                  label: "Choose Model:",
+                  fontSize: 16,
                 ),
-                Flexible(
-                  flex: 2,
-                  child: ModelsDropDownWidget(),
-                ),
+                ModelsDropDownWidget(),
               ],
             ),
           );
