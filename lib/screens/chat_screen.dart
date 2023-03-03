@@ -7,6 +7,7 @@ import 'package:chat_gpt/services/assets_manager.dart';
 import 'package:chat_gpt/services/services.dart';
 import 'package:chat_gpt/widgets/chat_widget.dart';
 import 'package:chat_gpt/widgets/text_widget.dart';
+import 'package:chat_gpt/widgets/threedots_animated_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -96,12 +97,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 trailing: _isTyping
                     ? const SizedBox(
-                        height: 24.0,
-                        width: 28.0,
-                        child: SpinKitThreeBounce(
-                          color: Colors.white,
-                          size: 18,
-                        ),
+                        height: 28.0,
+                        width: 30.0,
+                        child: ThreeDots(),
                       )
                     : IconButton(
                         onPressed: () async {
